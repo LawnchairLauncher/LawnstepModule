@@ -13,8 +13,6 @@ if [ -f $DATADIR/ch.deletescape.lawnchair.dev*/base.apk ] || [ -f $DATADIR/ch.de
         sed -i "s|<VAR>|$var|" $CONF/lawnchair-hiddenapi-package-whitelist.xml
         cp_ch $PERM/privapp-permissions-lawnchair.xml $PERMDIR/privapp-permissions-lawnchair-dev.xml
         cp_ch $CONF/lawnchair-hiddenapi-package-whitelist.xml $CONFDIR/lawnchair-dev-hiddenapi-package-whitelist.xml
-        LCVAR="-Dev"
-        VARIANT=ch.deletescape.lawnchair.dev
         break;;
       *ch.deletescape.lawnchair.ci*)
         ui_print "   $var detected!"
@@ -28,8 +26,6 @@ if [ -f $DATADIR/ch.deletescape.lawnchair.dev*/base.apk ] || [ -f $DATADIR/ch.de
         sed -i "s|<VAR>|$var|" $CONF/lawnchair-hiddenapi-package-whitelist.xml
         cp_ch $PERM/privapp-permissions-lawnchair.xml $PERMDIR/privapp-permissions-lawnchair-ci.xml
         cp_ch $CONF/lawnchair-hiddenapi-package-whitelist.xml $CONFDIR/lawnchair-ci-hiddenapi-package-whitelist.xml
-        LCVAR="-Ci"
-        VARIANT=ch.deletescape.lawnchair.ci
         break;;
       *ch.deletescape.lawnchair.plah*)
         ui_print "   $var detected!"
@@ -43,8 +39,6 @@ if [ -f $DATADIR/ch.deletescape.lawnchair.dev*/base.apk ] || [ -f $DATADIR/ch.de
         sed -i "s|<VAR>|$var|" $CONF/lawnchair-hiddenapi-package-whitelist.xml
         cp_ch $PERM/privapp-permissions-lawnchair.xml $PERMDIR/privapp-permissions-lawnchair-plah.xml
         cp_ch $CONF/lawnchair-hiddenapi-package-whitelist.xml $CONFDIR/lawnchair-plah-hiddenapi-package-whitelist.xml
-        LCVAR="-Plah"
-        VARIANT=ch.deletescape.lawnchair.plah
         break;;
       *'ch.deletescape.lawnchair '*)
         ui_print "   $var detected!"
@@ -58,8 +52,6 @@ if [ -f $DATADIR/ch.deletescape.lawnchair.dev*/base.apk ] || [ -f $DATADIR/ch.de
         sed -i "s|<VAR>|$var|" $CONF/lawnchair-hiddenapi-package-whitelist.xml
         cp_ch $PERM/privapp-permissions-lawnchair.xml $PERMDIR/privapp-permissions-lawnchair.xml
         cp_ch $CONF/lawnchair-hiddenapi-package-whitelist.xml $CONFDIR/lawnchair-hiddenapi-package-whitelist.xml
-        LCVAR=
-        VARIANT=ch.deletescape.lawnchair
         break;;
     esac
     rm /data/resource-cache/overlays.list
