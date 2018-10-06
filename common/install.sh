@@ -1,6 +1,6 @@
 if [ -f $DATADIR/ch.deletescape.lawnchair.dev*/base.apk ] || [ -f $DATADIR/ch.deletescape.lawnchair.ci*/base.apk ] || [ -f $DATADIR/ch.deletescape.lawnchair.plah*/base.apk ] || [ -f $DATADIR/ch.deletescape.lawnchair-*/base.apk ] || [ -f $SYSDIR/Lawnchair*/Lawnchair*.apk ]; then
   for var in $VARS; do
-    case $(grep -F "$var" "$XML") in
+    case $(grep -F "$var" "$FILE") in
       *ch.deletescape.lawnchair.dev*)
         ui_print "   $var detected!"
         if [ -d $DATADIR/$var* ]; then

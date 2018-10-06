@@ -52,7 +52,11 @@ DEBUG=true
 
 # Custom Variables for Install AND Uninstall - Keep everything within this function
 unity_custom() {
-XML=/data/system/packages.xml
+if [ -f /storage/emulated/0/Documents/Lawnchair/lawnstep ]; then
+  FILE=/storage/emulated/0/Documents/Lawnchair/lawnstep
+else
+  FILE=/data/system/packages.xml
+fi
 VARS="
 ch.deletescape.lawnchair.dev
 ch.deletescape.lawnchair.ci
