@@ -17,6 +17,7 @@ Lawnstep is a magisk module to easily enable Pie recents (Quickstep) support in 
 
 ## Changelog
 v1.0.4
+ - fix permissions for the overlay
  - add changelog to README.md due to contemplating submitting the module to the Magisk repo
  - set minMagisk to 17200 so Magisk 17.2 must be used to install the module
  - prepare for packaging the module with Lawnchair
