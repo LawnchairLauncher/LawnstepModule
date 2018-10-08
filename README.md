@@ -6,11 +6,12 @@ If you wish to donate to Till for creating Lawnchair you can do so by purchasing
 Or if you wish to donate to Skittles9823 for making the module you can do so [here](https://paypal.me/Skittles2398).
 
 ## Compatibility:
-- Magisk v17+
+- Magisk v17.2+
 - SuperSU
 - Init.d support if not using Magisk or SuperSU (Try [Init.d Injector](https://forum.xda-developers.com/android/software-hacking/mod-universal-init-d-injector-wip-t3692105))
 
 ## Requirements:
+- Magisk v17.2+
 - Android 9.0 Pie
 - Lawnchair v2 - 420+ (p_merge branch)
 
