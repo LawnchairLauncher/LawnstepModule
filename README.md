@@ -1,6 +1,10 @@
 # Lawnstep - Lawnchair Quickstep enabler
 Lawnstep is a magisk module which systemlessly enables Pie recents (Quickstep) in Lawnchair
 
+## Donations:
+If you wish to donate to Till for creating Lawnchair you can do so by purchasing [Donut Donation](https://play.google.com/store/apps/details?id=ch.deletescape.donut) or via his [Paypal](https://paypal.me/Deletescape).
+Or if you wish to donate to Skittles9823 for making the module you can do so [here](https://paypal.me/Skittles2398).
+
 ## Compatibility:
 - Magisk v17+
 - SuperSU
