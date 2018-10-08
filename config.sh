@@ -134,7 +134,7 @@ set_permissions() {
 
   # CUSTOM PERMISSIONS
 
-  set_perm_recursive $UNITY$VEN/* 0 2000 0755
+  set_perm_recursive $UNITY$VEN/* 0 2000 0755 0644
   set_perm $UNITY$VEN/overlay/* 0 0 0644
 
   # Some templates if you have no idea what to do:
