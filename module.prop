@@ -1,7 +1,7 @@
 id=lawnstep
 name=Lawnstep
-version=v1.0.3
-versionCode=103
+version=v1.0.4
+versionCode=104
 author=The Lawnchair team
 description=Pie recents for Lawnchair v2.
-minMagisk=17000
+minMagisk=17200
