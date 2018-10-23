@@ -23,11 +23,15 @@ Or if you wish to donate to Skittles9823 for making the module you can do so [he
 - [Magisk module template](https://github.com/topjohnwu/magisk-module-template) by [topjohnwu](https://forum.xda-developers.com/member.php?u=4470081)
 
 ## Changelog:
+### v1.0.6
+- fix logging
+
 ### v1.0.5
 - add Lawnchair to battery optimisation whitelist (should prevent Lawnchair from getting killed in the background)
 - format code in install.sh
 - add formatted debugging logs
 - change log output to /sdcard/Documents/Lawnchair/logs/Lawnstep-logs.tar
+
 ### v1.0.4
 - fix permissions for the overlay
 - add changelog to README.md due to contemplating submitting the module to the Magisk repo
