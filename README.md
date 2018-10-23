@@ -27,7 +27,7 @@ Or if you wish to donate to Skittles9823 for making the module you can do so [he
 - add Lawnchair to battery optimisation whitelist (should prevent Lawnchair from getting killed in the background)
 - format code in install.sh
 - add formatted debugging logs
-
+- change log output to /sdcard/Documents/Lawnchair/logs/Lawnstep-logs.tar
 ### v1.0.4
 - fix permissions for the overlay
 - add changelog to README.md due to contemplating submitting the module to the Magisk repo
