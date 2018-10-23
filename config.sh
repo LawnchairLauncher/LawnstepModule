@@ -148,4 +148,20 @@ set_permissions() {
 
   # set_perm  <filename>                         <owner> <group> <permission> <contexts> (default: u:object_r:system_file:s0)
   # set_perm $UNITY$SYS/lib/libart.so 0 0 0644
+
+  if $DEBUG; then
+    if $BOOTMODE; then SDCARD=/storage/emulated/0; else SDCARD=/data/media/0; fi
+    echo "---Device Info---" > $SDCARD/$MODID-debug-formatted.log
+    grep "^ro.product.device[^#]" /system/build.prop | sed 's/ro.product.device/Device/g' >> $SDCARD/$MODID-debug-formatted.log
+    grep "^ro.build.type[^#]" /system/build.prop | sed 's/ro.build.type/Buildtype/g' >> $SDCARD/$MODID-debug-formatted.log
+    grep "^ro.build.version.security_patch[^#]" /system/build.prop | sed 's/ro.build.version.security_patch/SecurityPatch/g' >> $SDCARD/$MODID-debug-formatted.log
+    grep "^ro.product.cpu.abilist[^#]" /system/build.prop | sed 's/ro.product.cpu.abilist/Arch/g' >> $SDCARD/$MODID-debug-formatted.log
+    echo -e "\n---Variables---" >> $SDCARD/$MODID-debug-formatted.log
+    ( set -o posix ; set ) >> $SDCARD/$MODID-debug-formatted.log
+    echo -e "\n---Installed Files---" >> $SDCARD/$MODID-debug-formatted.log
+    grep "^+ cp_ch" $SDCARD/$MODID-debug.log | sed 's/.* //g' >> $SDCARD/$MODID-debug-formatted.log
+    echo -e "\n---Errors---" >> $SDCARD/$MODID-debug-formatted.log
+    grep "^[^+'(ch.)]" $SDCARD/$MODID-debug.log >> $SDCARD/$MODID-debug-formatted.log
+    $MAGISK && echo -e "\n---Magisk Version---\n$MAGISK_VER_CODE" >> $SDCARD/$MODID-debug-formatted.log    
+  fi
 }
