@@ -163,6 +163,7 @@ set_permissions() {
     echo -e "\n---Errors---" >> $SDCARD/$MODID-debug-formatted.log
     grep "^[^+'(ch.)]" $SDCARD/$MODID-debug.log >> $SDCARD/$MODID-debug-formatted.log
     $MAGISK && echo -e "\n---Magisk Version---\n$MAGISK_VER_CODE" >> $SDCARD/$MODID-debug-formatted.log
+    echo -e "\n---Module Version---\n$versionCode" >> $SDCARD/$MODID-debug-formatted.log
     tar cvf $SDCARD/$MODID-debug.tar -C $SDCARD $MODID-debug.log $MODID-debug-formatted.log > /dev/null
     mkdir -p $SDCARD/Documents/Lawnchair/logs
     cp -rf $SDCARD/$MODID-debug.tar $SDCARD/Documents/Lawnchair/logs/
