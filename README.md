@@ -23,6 +23,9 @@ Or if you wish to donate to Skittles9823 for making the module you can do so [he
 - [Magisk module template](https://github.com/topjohnwu/magisk-module-template) by [topjohnwu](https://forum.xda-developers.com/member.php?u=4470081)
 
 ## Changelog:
+### v1.0.7
+- fix install for users with /product/overlay
+
 ### v1.0.6
 - fix logging
 

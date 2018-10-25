@@ -76,6 +76,8 @@ ch.deletescape.lawnchair
   CONFDIR=$INSTALLER$SYS/etc/sysconfig
   DATADIR=/data/app
   SYSDIR=/system/priv-app
+
+  if [ $STEPDIR == "/product/overlay" ]; then mount -o remount,rw /product; fi
 }
 
 # Custom Functions for Install AND Uninstall - You can put them here
@@ -163,7 +165,8 @@ set_permissions() {
     echo -e "\n---Errors---" >> $SDCARD/$MODID-debug-formatted.log
     grep "^[^+'(ch.)]" $SDCARD/$MODID-debug.log >> $SDCARD/$MODID-debug-formatted.log
     $MAGISK && echo -e "\n---Magisk Version---\n$MAGISK_VER_CODE" >> $SDCARD/$MODID-debug-formatted.log
-    echo -e "\n---Module Version---\n$versionCode" >> $SDCARD/$MODID-debug-formatted.log
+    echo -e "\n---Module Version---" >> $SDCARD/$MODID-debug-formatted.log
+    grep "^versionCode" $INSTALLER/module.prop | sed 's/versionCode/ModuleVersion/g' >> $SDCARD/$MODID-debug-formatted.log
     tar cvf $SDCARD/$MODID-debug.tar -C $SDCARD $MODID-debug.log $MODID-debug-formatted.log > /dev/null
     mkdir -p $SDCARD/Documents/Lawnchair/logs
     cp -rf $SDCARD/$MODID-debug.tar $SDCARD/Documents/Lawnchair/logs/
