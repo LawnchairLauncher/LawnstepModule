@@ -57,27 +57,76 @@ if [ -f /storage/emulated/0/Documents/Lawnchair/lawnstep ]; then
 else
   FILE=/data/system/packages.xml
 fi
+# Package name(s) for the launcher 
 VARS="
 ch.deletescape.lawnchair.dev
 ch.deletescape.lawnchair.ci
 ch.deletescape.lawnchair.plah
 ch.deletescape.lawnchair
 "
+# Alternate Quickstep overlays to delete on install (without .apk)
+ALTSTEPS="
+Hypestep
+"
+  ### User defined variables ###
+  # The directory and filename of the systemised launcher apk (without .apk)
+  LAUNCHER=Lawnchair
+  # The filename of the overlay to be placed in $STEPDIR (without .apk)
+  QUICKSTEP=Lawnstep
+  # Filename of the xml to go in /system/etc/sysconfig/
+  CONFXML=lawnchair-hiddenapi-package-whitelist.xml
+  # Filename of the xml to go in /system/etc/permissions/
+  PERMXML=privapp-permissions-lawnchair.xml
+  # Directory for the overlays in this module
+  STEP=$INSTALLER/custom/Lawnstep
+  # The warning to display if the launcher is already detected as a system app
+  systemapp_warn() {
+    ui_print " "
+    ui_print "          $LAUNCHER is already systemised.           "
+    ui_print " "
+    ui_print "   If $LAUNCHER came with your rom its recommended   "
+    ui_print "    to have $QUICKSTEP built into the rom as well.   "
+    ui_print "   If you have issues with the module, ask the rom   "
+    ui_print "         developer to incorpirate $QUICKSTEP.        "
+    ui_print " "
+  }
+
+  ### Don't touch the variables below here ###
   CONF=$INSTALLER/custom/etc/sysconfig
   PERM=$INSTALLER/custom/etc/permissions
-  STEP=$INSTALLER/custom/Lawnstep
   if [ -d /product/overlay ]; then
     STEPDIR=/product/overlay
+    ALTDIR=/product/overlay
   else
     STEPDIR=$INSTALLER$VEN/overlay
+    ALTDIR=$VEN/overlay
   fi
   APPDIR=$INSTALLER$SYS/priv-app
   PERMDIR=$INSTALLER$SYS/etc/permissions
   CONFDIR=$INSTALLER$SYS/etc/sysconfig
   DATADIR=/data/app
   SYSDIR=/system/priv-app
+  
+  launcher_abort() {
+    ui_print "*********************************************"
+    ui_print "*     $QUICKSTEP could not be installed     *"
+    ui_print "*    Due to $LAUNCHER not being installed   *"
+    ui_print "*                                           *"
+    ui_print "*  Please install $LAUNCHER, then try again *"
+    ui_print "*********************************************"
+    abort
+  }
+  product_abort() {
+    ui_print "***************************************"
+    ui_print "*  $QUICKSTEP could not be installed  *"
+    ui_print "* Due to /product not being mountable *"
+    ui_print "*                                     *"
+    ui_print "*   A solution is being looked into   *"
+    ui_print "***************************************"
+    abort
+  }
 
-  if [ $STEPDIR == "/product/overlay" ]; then mount -o remount,rw /product; fi
+  if [ $STEPDIR == "/product/overlay" ]; then mount -o remount,rw /product || product_abort; fi
 }
 
 # Custom Functions for Install AND Uninstall - You can put them here
@@ -168,8 +217,9 @@ set_permissions() {
     echo -e "\n---Module Version---" >> $SDCARD/$MODID-debug-formatted.log
     grep "^versionCode" $INSTALLER/module.prop | sed 's/versionCode/ModuleVersion/g' >> $SDCARD/$MODID-debug-formatted.log
     tar cvf $SDCARD/$MODID-debug.tar -C $SDCARD $MODID-debug.log $MODID-debug-formatted.log > /dev/null
-    mkdir -p $SDCARD/Documents/Lawnchair/logs
-    cp -rf $SDCARD/$MODID-debug.tar $SDCARD/Documents/Lawnchair/logs/
+    mkdir -p $SDCARD/Documents/$MODID/logs
+    cp -rf $SDCARD/$MODID-debug.tar $SDCARD/Documents/$MODID/logs/
+    cp -rf $SDCARD/$MODID-debug.tar /cache/
     rm $SDCARD/$MODID*.log
     rm $SDCARD/$MODID*.tar
   fi

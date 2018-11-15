@@ -320,7 +320,9 @@ $RAMDISK && unpack_ramdisk
 if $DEBUG; then
   ui_print " "
   ui_print "- Debug mode"
-  ui_print "  Debug log will be written to: /sdcard/Documents/Lawnchair/logs/$MODID-debug.tar"
+  ui_print "  Debug log will be written to:"
+  ui_print "    - /sdcard/Documents/$MODID/logs/$MODID-debug.tar"
+  ui_print "    - /cache/$MODID-debug.tar"
   if $BOOTMODE; then exec 2>/storage/emulated/0/$MODID-debug.log; else exec 2>/data/media/0/$MODID-debug.log; fi
   set -x
 fi

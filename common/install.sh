@@ -1,73 +1,36 @@
-if [ -f $DATADIR/ch.deletescape.lawnchair.dev*/base.apk ] \
-  || [ -f $DATADIR/ch.deletescape.lawnchair.ci*/base.apk ] \
-  || [ -f $DATADIR/ch.deletescape.lawnchair.plah*/base.apk ] \
-  || [ -f $DATADIR/ch.deletescape.lawnchair-*/base.apk ] \
-  || [ -f $SYSDIR/Lawnchair*/Lawnchair*.apk ]; then
-  for var in $VARS; do
-    case $(grep -F "$var" "$FILE") in
-      *ch.deletescape.lawnchair.dev*)
-        ui_print "   $var detected!"
-        if [ -d $DATADIR/$var* ]; then
-          cp_ch $DATADIR/$var*/*.apk $APPDIR/Lawnchair-Dev/Lawnchair-Dev.apk
-        elif [ -d $SYSDIR/Lawnchair-Dev ]; then
-          ui_print "   $var already systemlessly systemised"
-        fi
-        cp_ch $STEP/LawnstepDev.apk $STEPDIR/Lawnstep-Dev.apk
-        sed -i "s|<VAR>|$var|" $PERM/privapp-permissions-lawnchair.xml
-        sed -i "s|<VAR>|$var|g" $CONF/lawnchair-hiddenapi-package-whitelist.xml
-        cp_ch $PERM/privapp-permissions-lawnchair.xml \
-          $PERMDIR/privapp-permissions-lawnchair-dev.xml
-        cp_ch $CONF/lawnchair-hiddenapi-package-whitelist.xml \
-          $CONFDIR/lawnchair-dev-hiddenapi-package-whitelist.xml
-        break;;
-      *ch.deletescape.lawnchair.ci*)
-        ui_print "   $var detected!"
-        if [ -d $DATADIR/$var* ]; then
-          cp_ch $DATADIR/$var*/*.apk $APPDIR/Lawnchair-Ci/Lawnchair-Ci.apk
-        elif [ -d $SYSDIR/Lawnchair-Ci ]; then
-          ui_print "   $var already systemlessly systemised"
-        fi
-        cp_ch $STEP/LawnstepCi.apk $STEPDIR/Lawnstep-Ci.apk
-        sed -i "s|<VAR>|$var|" $PERM/privapp-permissions-lawnchair.xml
-        sed -i "s|<VAR>|$var|g" $CONF/lawnchair-hiddenapi-package-whitelist.xml
-        cp_ch $PERM/privapp-permissions-lawnchair.xml \
-          $PERMDIR/privapp-permissions-lawnchair-ci.xml
-        cp_ch $CONF/lawnchair-hiddenapi-package-whitelist.xml \
-          $CONFDIR/lawnchair-ci-hiddenapi-package-whitelist.xml
-        break;;
-      *ch.deletescape.lawnchair.plah*)
-        ui_print "   $var detected!"
-        if [ -d $DATADIR/$var* ]; then
-          cp_ch $DATADIR/$var*/*.apk $APPDIR/Lawnchair-Plah/Lawnchair-Plah.apk
-        elif [ -d $SYSDIR/Lawnchair-Plah ]; then
-          ui_print "   $var already systemlessly systemised"
-        fi
-        cp_ch $STEP/LawnstepPlah.apk $STEPDIR/Lawnstep-Plah.apk
-        sed -i "s|<VAR>|$var|" $PERM/privapp-permissions-lawnchair.xml
-        sed -i "s|<VAR>|$var|g" $CONF/lawnchair-hiddenapi-package-whitelist.xml
-        cp_ch $PERM/privapp-permissions-lawnchair.xml \
-          $PERMDIR/privapp-permissions-lawnchair-plah.xml
-        cp_ch $CONF/lawnchair-hiddenapi-package-whitelist.xml \
-          $CONFDIR/lawnchair-plah-hiddenapi-package-whitelist.xml
-        break;;
-      *'ch.deletescape.lawnchair '*)
-        ui_print "   $var detected!"
-        if [ -d $DATADIR/$var* ]; then
-          cp_ch $DATADIR/$var*/*.apk $APPDIR/Lawnchair/Lawnchair.apk
-        elif [ -d $SYSDIR/Lawnchair ]; then
-          ui_print "   $var already systemlessly systemised"
-        fi
-        cp_ch $STEP/Lawnstep.apk $STEPDIR/Lawnstep.apk
-        sed -i "s|<VAR>|$var|" $PERM/privapp-permissions-lawnchair.xml
-        sed -i "s|<VAR>|$var|g" $CONF/lawnchair-hiddenapi-package-whitelist.xml
-        cp_ch $PERM/privapp-permissions-lawnchair.xml \
-          $PERMDIR/privapp-permissions-lawnchair.xml
-        cp_ch $CONF/lawnchair-hiddenapi-package-whitelist.xml \
-          $CONFDIR/lawnchair-hiddenapi-package-whitelist.xml
-        break;;
-    esac
-    rm /data/resource-cache/overlays.list
-  done
-else
-  abort "   Lawnchair not detected. aborting"
-fi
+for VAR in $VARS; do
+  if [ -f $DATADIR/$VAR-*/base.apk ] \
+    || [ -f $SYSDIR/$LAUNCHER*/$LAUNCHER*.apk ]; then
+    STEPAPK=$(grep -Fo -m 1 "$VAR" "$FILE")
+    STEPAPK=$(echo $STEPAPK | sed "s| .*||")
+    if [ ! -z $STEPAPK ]; then
+      SUCCESS=true
+      ui_print " "
+      ui_print "   $VAR detected!"
+      ui_print " "
+      if [ -d $DATADIR/$VAR* ]; then
+        cp_ch $DATADIR/$VAR*/*.apk $APPDIR/$LAUNCHER/$LAUNCHER.apk
+      elif [ -d $SYSDIR/$LAUNCHER -a ! -f $STEPDIR/$QUICKSTEP.apk ]; then
+        systemapp_warn
+      fi
+      cp_ch $STEP/$STEPAPK.apk $STEPDIR/$QUICKSTEP.apk
+      sed -i "s|<VAR>|$VAR|" $PERM/$PERMXML
+      sed -i "s|<VAR>|$VAR|" $CONF/$CONFXML
+      cp_ch $PERM/$PERMXML $PERMDIR/$PERMXML
+      cp_ch $CONF/$CONFXML $CONFDIR/$CONFXML
+      rm /data/resource-cache/overlays.list
+      for ALT in $ALTSTEPS; do
+        case $(find $ALTDIR/$ALT*) in
+          *$ALT*)
+            rm -rf $ALTDIR/$ALT*
+            ui_print " "
+            ui_print "   Alternate quickstep overlay found!"
+            ui_print "        Deleting $ALTDIR/$ALT        "
+            ui_print " ";;
+        esac
+      done
+      break
+    fi
+  fi
+done
+if [ -z $SUCCESS ]; then launcher_abort; fi
